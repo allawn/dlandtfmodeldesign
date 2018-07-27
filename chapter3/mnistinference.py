@@ -1,5 +1,5 @@
 import tensorflow as tf
-import train
+import mnisttrain
 import cv2
 checkPointPath="C:\\tmp\\mnistckp\\model.ckp"
 
@@ -9,7 +9,7 @@ def run(imgName):
     with graph.as_default():
         imgData=cv2.imread(imgName,0)
         input=tf.convert_to_tensor(imgData,dtype=tf.float32)
-        logist=train.inference(input)
+        logist=mnisttrain.inference(input)
         prediction = tf.nn.softmax(logist)
         saver = tf.train.Saver()
 
