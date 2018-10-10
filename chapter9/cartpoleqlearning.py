@@ -19,8 +19,8 @@ def discretize(obs):
                     math.radians(50)]
     lower_bounds = [env.observation_space.low[0], -0.5, env.observation_space.low[2],
                     -math.radians(50)]
-    ratios = [(obs[i] + abs(lower_bounds[i])) / (upper_bounds[i] - lower_bounds[i]) for i
-              in range(len(obs))]
+    ratios = [(obs[i] + abs(lower_bounds[i])) / (upper_bounds[i] - lower_bounds[i])
+              for i in range(len(obs))]
     new_obs = [int(round((buckets[i] - 1) * ratios[i])) for i in range(len(obs))]
     new_obs = [min(buckets[i] - 1, max(0, new_obs[i])) for i in range(len(obs))]
     return tuple(new_obs)
@@ -34,12 +34,12 @@ def choose_action(state, epsilon):
 
 
 def update_q(state_old, action, reward, state_new, alpha):
-    Q[state_old][action] += alpha * (
-    reward + gamma * np.max(Q[state_new]) - Q[state_old][action])
+    tmp_q = reward + gamma * np.max(Q[state_new]) - Q[state_old][action]
+    Q[state_old][action] += alpha * tmp_q
 
 
 def get_epsilon(t):
-    return max(min_epsilon, min(1, 1.0 - math.log10((t + 1) / ada_divisor)))
+    return max(min_epsilon,  min(1, 1.0 - math.log10((t + 1) / ada_divisor)))
 
 
 def run_episode():
