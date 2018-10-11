@@ -30,7 +30,6 @@ actions = tf.placeholder(tf.int32, [None, action_size], name="actions")
 discounted_episode_rewards_ = tf.placeholder(tf.float32, [None, ],
                                              name="discounted_episode_rewards")
 
-mean_reward_ = tf.placeholder(tf.float32, name="mean_reward")
 fc1 = tf.contrib.layers.fully_connected(inputs=input_,
                                         num_outputs=10,
                                         activation_fn=tf.nn.relu,
@@ -49,9 +48,6 @@ neg_log_prob = tf.nn.softmax_cross_entropy_with_logits_v2(logits=fc3,
 loss = tf.reduce_mean(neg_log_prob * discounted_episode_rewards_)
 train_opt = tf.train.AdamOptimizer(learning_rate).minimize(loss)
 
-allRewards = []
-total_rewards = 0
-maximumRewardRecorded = 0
 episode = 0
 episode_states, episode_actions, episode_rewards = [], [], []
 
@@ -60,10 +56,6 @@ saver = tf.train.Saver()
 sess = tf.InteractiveSession()
 sess.run(tf.global_variables_initializer())
 for episode in range(max_episodes):
-
-    episode_rewards_sum = 0
-
-    # Launch the game
     state = env.reset()
     while True:
         action_probability_distribution = sess.run(action_distribution, feed_dict={
