@@ -270,7 +270,7 @@ if training:
             PGNetwork.inputs_: states_mb.reshape((len(states_mb), 84, 84, 4)),
             PGNetwork.actions: actions_mb,
             PGNetwork.discounted_episode_rewards_: discounted_rewards_mb
-            })
+        })
 
         print("Training Loss: {}".format(loss_))
         summary = sess.run(write_op, feed_dict={
@@ -278,7 +278,7 @@ if training:
             PGNetwork.actions: actions_mb,
             PGNetwork.discounted_episode_rewards_: discounted_rewards_mb,
             PGNetwork.mean_reward_: mean_reward_of_that_batch
-            })
+        })
         writer.add_summary(summary, epoch)
         writer.flush()
 
