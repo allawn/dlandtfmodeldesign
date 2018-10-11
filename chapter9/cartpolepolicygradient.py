@@ -25,7 +25,6 @@ def discount_and_normalize_rewards(episode_rewards):
     return discounted_episode_rewards
 
 
-
 input_ = tf.placeholder(tf.float32, [None, state_size], name="input_")
 actions = tf.placeholder(tf.int32, [None, action_size], name="actions")
 discounted_episode_rewards_ = tf.placeholder(tf.float32, [None, ],
@@ -58,7 +57,7 @@ episode_states, episode_actions, episode_rewards = [], [], []
 
 saver = tf.train.Saver()
 
-sess=tf.InteractiveSession()
+sess = tf.InteractiveSession()
 sess.run(tf.global_variables_initializer())
 for episode in range(max_episodes):
 
