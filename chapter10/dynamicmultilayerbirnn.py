@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def static_bi_rnn(inputs, lengths, num_units, num_layers, dropout):
+def stack_dynamic_bi_rnn(inputs, lengths, num_units, num_layers, dropout):
     cell = tf.nn.rnn_cell.BasicRNNCell
     cells_fw = [cell(num_units) for _ in range(num_layers)]
     cells_bw = [cell(num_units) for _ in range(num_layers)]
