@@ -3,10 +3,13 @@ import tensorflow as tf
 hidden_units = 20
 attention_size = hidden_units
 cell = tf.nn.rnn_cell.BasicLSTMCell(num_units=hidden_units)
-timesteps = 5;
+timesteps = 5
 batch_size = 2
 input = tf.placeholder(tf.float32, [batch_size, timesteps, 1], name='input_x')
+
 outputs, states = tf.nn.dynamic_rnn(cell=cell, inputs=input, dtype=tf.float32)
+outputs = tf.transpose(outputs, [1, 0, 2])
+
 outputs = tf.reshape(outputs, shape=[timesteps, batch_size, hidden_units])
 attention_w = tf.Variable(tf.truncated_normal([hidden_units, attention_size], stddev=0.1),
                           name='attention_w')
